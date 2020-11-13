@@ -19,8 +19,8 @@ export const sendEmail = ({ image, link, description, doc }) => async (
   const formData = new FormData();
   formData.append("image", image, image.name);
   formData.append("document", doc, doc.name);
-  // formData.append("link", link);
-  // formData.append("description", description);
+  formData.append("link", link);
+  formData.append("description", description);
   try {
     const token = localStorage.getItem("token");
     const res = await axios.post(backendurl + "/api/sendlink/email", formData, {
