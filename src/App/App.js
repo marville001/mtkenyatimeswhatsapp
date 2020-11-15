@@ -9,6 +9,7 @@ import Wrapper from "../pages/Wrapper";
 import { Route, Switch } from "react-router-dom";
 import { getProfileFetch } from "../_actions";
 import { loadEmails } from "../_actions/shareActions";
+import Users from "../pages/Users/Users";
 
 const theme = createMuiTheme({
   palette: {
@@ -52,6 +53,15 @@ const App = (props) => {
           component={() => (
             <Wrapper>
               <Mails />
+            </Wrapper>
+          )}
+        />
+        <Route
+          exact
+          path="/users"
+          component={() => (
+            <Wrapper>
+              <Users />
             </Wrapper>
           )}
         />

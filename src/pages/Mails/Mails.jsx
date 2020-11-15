@@ -11,11 +11,11 @@ import { Alert, AlertTitle } from "@material-ui/lab";
 const useStyles = makeStyles((theme) => ({
   pageContent: {
     padding: theme.spacing(3),
-    margin: theme.spacing(5),
+    margin: theme.spacing(3),
   },
   addForm: {
     padding: theme.spacing(3),
-    margin: theme.spacing(5),
+    margin: theme.spacing(1),
   },
   button: {
     margin: theme.spacing(1),
@@ -48,17 +48,17 @@ const Employees = () => {
       <Paper className={classes.pageContent}>
         <Grid container>
           <Grid item md={6} sm={12} xs={12}>
-            <Paper className={classes.addForm}>
-              {addError && addError.length > 0 ? (
-                <>
-                  <AlertTitle>Error!</AlertTitle>
-                  <Alert severity="error">
-                    <AlertTitle>Error!</AlertTitle>
-                    {addError}
-                  </Alert>
-                </>
-              ) : null}
+            <div className={classes.addForm}>
               <Form>
+                {addError && addError.length > 0 ? (
+                  <>
+                    <AlertTitle>Error!</AlertTitle>
+                    <Alert severity="error">
+                      <AlertTitle>Error!</AlertTitle>
+                      {addError}
+                    </Alert>
+                  </>
+                ) : null}
                 <Grid container>
                   <Grid item xs={12}>
                     <TextField
@@ -92,7 +92,7 @@ const Employees = () => {
                   </Grid>
                 </Grid>
               </Form>
-            </Paper>
+            </div>
           </Grid>
           <Grid item md={6} sm={12} xs={12}>
             <EmailsTable mails={mails} />
