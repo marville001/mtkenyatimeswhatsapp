@@ -2,92 +2,83 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import {
   AppBar,
-  Grid,
-  Avatar,
-  Menu,
-  MenuItem,
+  Button,
   makeStyles,
   Toolbar,
+  IconButton,
+  useMediaQuery,
 } from "@material-ui/core";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import { useTheme } from "@material-ui/core/styles";
+import MenuIcon from "@material-ui/icons/Menu";
 import { Link } from "react-router-dom";
 import { logoutUser } from "../_actions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: "#fff",
-    transform: "translateZ(0)",
+    flexGrow: 1,
   },
-  searchInput: {
-    opacity: "0.6",
-    padding: `0px ${theme.spacing(1)}px`,
-    fontSize: "0.8rem",
-    "&:hover": {
-      backgroundColor: "#f2f2f2",
-    },
-    "& .MuiSvgIcon-root": {
-      marginRight: theme.spacing(1), //1===8,2===16
-    },
+  menuButton: {
+    marginRight: theme.spacing(2),
   },
   link: {
+    color: "#fff",
+    display: "inline-block",
+    fontSize: "15px",
     textDecoration: "none",
-    color: "#000",
+    margin: "20px",
+  },
+  menuLinks: {
+    display: "flex",
+    justifyFlex: "flex-start",
+    alignItems: "center",
+    width: "100%",
+  },
+  logBtn: {
+    marginLeft: "auto",
   },
 }));
 
 const Header = () => {
   const classes = useStyles();
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.up("sm"));
   const dispatch = useDispatch();
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
-
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
   return (
-    <AppBar position="sticky" className={classes.root}>
-      <Toolbar>
-        <Grid container alignItems="center">
-          <Grid item sm></Grid>
-          <Grid item>
-            <Avatar
-              aria-controls="simple-menu"
-              aria-haspopup="true"
-              onClick={handleClick}
-              style={{ cursor: "pointer" }}
+    <div className={classes.root}>
+      <AppBar position="sticky">
+        <Toolbar>
+          {!matches && (
+            <IconButton
+              edge="start"
+              className={classes.menuButton}
+              color="inherit"
+              aria-label="menu"
             >
-              <AccountCircleIcon />
-            </Avatar>
-            <Menu
-              id="simple-menu"
-              anchorEl={anchorEl}
-              keepMounted
-              open={Boolean(anchorEl)}
-              onClose={handleClose}
+              <MenuIcon />
+            </IconButton>
+          )}
+          <div className={classes.menuLinks}>
+            <Link to="/" className={classes.link}>
+              Share
+            </Link>
+            <Link to="/mails" className={classes.link}>
+              All Mails
+            </Link>
+            <Link to="/users" className={classes.link}>
+              Users
+            </Link>
+            <Button
+              onClick={() => dispatch(logoutUser())}
+              className={classes.logBtn}
+              color="inherit"
             >
-              <MenuItem onClick={handleClose}>
-                <Link className={classes.link} to="/">
-                  Profile
-                </Link>
-              </MenuItem>
-              <MenuItem
-                onClick={() => {
-                  handleClose();
-                  dispatch(logoutUser());
-                }}
-              >
-                Logout
-              </MenuItem>
-            </Menu>
-          </Grid>
-        </Grid>
-      </Toolbar>
-    </AppBar>
+              Logout
+            </Button>
+          </div>
+        </Toolbar>
+      </AppBar>
+    </div>
   );
 };
 

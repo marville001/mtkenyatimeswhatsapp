@@ -17,10 +17,6 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(3),
     margin: theme.spacing(5),
   },
-  fac: {
-    display: "center",
-    alignItems: "center",
-  },
   button: {
     margin: theme.spacing(1),
   },
@@ -50,52 +46,58 @@ const Employees = () => {
         icon={<PeopleOutlineTwoTone fontSize="large" />}
       />
       <Paper className={classes.pageContent}>
-        <Paper className={classes.addForm}>
-          {addError && addError.length > 0 ? (
-            <>
-              <AlertTitle>Error!</AlertTitle>
-              <Alert severity="error">
-                <AlertTitle>Error!</AlertTitle>
-                {addError}
-              </Alert>
-            </>
-          ) : null}
-          <Form>
-            <Grid container>
-              <Grid item xs={12} md={4}>
-                <TextField
-                  value={name}
-                  variant="outlined"
-                  label="Name"
-                  name="name"
-                  onChange={(e) => setName(e.target.value)}
-                />
-              </Grid>
-              <Grid item xs={12} md={4}>
-                <TextField
-                  value={email}
-                  variant="outlined"
-                  label="Email"
-                  name="email"
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </Grid>
-              <Grid className={classes.fac} item xs={12} md={4}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  size="medium"
-                  className={classes.button}
-                  onClick={handleSubmit}
-                  disabled={addLoading ? true : false}
-                >
-                  {addLoading ? "loading.." : "Add"}
-                </Button>
-              </Grid>
-            </Grid>
-          </Form>
-        </Paper>
-        <EmailsTable mails={mails} />
+        <Grid container>
+          <Grid item md={6} sm={12} xs={12}>
+            <Paper className={classes.addForm}>
+              {addError && addError.length > 0 ? (
+                <>
+                  <AlertTitle>Error!</AlertTitle>
+                  <Alert severity="error">
+                    <AlertTitle>Error!</AlertTitle>
+                    {addError}
+                  </Alert>
+                </>
+              ) : null}
+              <Form>
+                <Grid container>
+                  <Grid item xs={12}>
+                    <TextField
+                      value={name}
+                      variant="outlined"
+                      label="Name"
+                      name="name"
+                      onChange={(e) => setName(e.target.value)}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      value={email}
+                      variant="outlined"
+                      label="Email"
+                      name="email"
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      size="medium"
+                      className={classes.button}
+                      onClick={handleSubmit}
+                      disabled={addLoading ? true : false}
+                    >
+                      {addLoading ? "loading.." : "Add"}
+                    </Button>
+                  </Grid>
+                </Grid>
+              </Form>
+            </Paper>
+          </Grid>
+          <Grid item md={6} sm={12} xs={12}>
+            <EmailsTable mails={mails} />
+          </Grid>
+        </Grid>
       </Paper>
     </>
   );

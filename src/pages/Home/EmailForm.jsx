@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Grid, makeStyles, TextField, Button } from "@material-ui/core";
+import {
+  Grid,
+  makeStyles,
+  TextField,
+  Button,
+  useMediaQuery,
+} from "@material-ui/core";
 import { sendEmail } from "../../_actions";
 import { Form } from "../../components/useForm";
 
@@ -12,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
 
 const EmailForm = () => {
   const classes = useStyles();
+  const matches = useMediaQuery("(min-width:750px)");
   const dispatch = useDispatch();
 
   const [image, setImage] = useState("");
@@ -61,7 +68,7 @@ const EmailForm = () => {
   return (
     <Form>
       <Grid container>
-        <Grid item xs={8}>
+        <Grid item xs={12} sm={5}>
           <div style={{ marginLeft: "10px", fontSize: "16px" }}>
             <input
               color="primary"
@@ -74,23 +81,15 @@ const EmailForm = () => {
               style={{ display: "none" }}
             />
             <label htmlFor="icon-button-file">
-              {image.length <= 1 ? (
-                <Button
-                  variant="contained"
-                  component="span"
-                  className={classes.button}
-                  size="large"
-                  color="secondary"
-                >
-                  Upload Image{" "}
-                </Button>
-              ) : (
-                <img
-                  style={{ width: "300px", height: "100px" }}
-                  src={imageData}
-                  alt="hello"
-                />
-              )}
+              <Button
+                variant="contained"
+                component="span"
+                className={classes.button}
+                size="large"
+                color="secondary"
+              >
+                Upload Image{" "}
+              </Button>
             </label>
           </div>
           <TextField
@@ -145,6 +144,19 @@ const EmailForm = () => {
             Send
           </Button>
           <br />
+        </Grid>
+        <Grid item xs={12} sm={7}>
+          <div style={{ margin: !matches ? "10px 0px" : "60px" }}>
+            {image.length <= 1 ? (
+              <h4>"Image Preview"</h4>
+            ) : (
+              <img
+                style={{ width: "350px", height: "160px" }}
+                src={imageData}
+                alt="hello"
+              />
+            )}
+          </div>
         </Grid>
       </Grid>
     </Form>
