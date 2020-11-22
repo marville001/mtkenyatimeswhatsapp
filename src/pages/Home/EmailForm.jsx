@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Grid,
   makeStyles,
@@ -20,6 +20,9 @@ const EmailForm = () => {
   const classes = useStyles();
   const matches = useMediaQuery("(min-width:750px)");
   const dispatch = useDispatch();
+  const { shareLoading, shareError, shareMessage } = useSelector(
+    (state) => state.shareReducer
+  );
 
   const [image, setImage] = useState("");
   const [link, setLink] = useState("");
@@ -68,6 +71,11 @@ const EmailForm = () => {
   return (
     <Form>
       <Grid container>
+        <Grid item xs={12} sm={12}>
+          {shareLoading && <h4>Loading.... please wait</h4>}
+          {shareError && <h4>{shareError}</h4>}
+          {shareMessage && <h4>{shareMessage}</h4>}
+        </Grid>
         <Grid item xs={12} sm={5}>
           <div style={{ marginLeft: "10px", fontSize: "16px" }}>
             <input

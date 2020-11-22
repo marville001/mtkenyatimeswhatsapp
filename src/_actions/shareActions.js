@@ -1,7 +1,7 @@
 import {
-  // SHARE_EMAIL_REQUEST,
-  // SHARE_EMAIL_SUCCESS,
-  // SHARE_EMAIL_FAILED,
+  SHARE_EMAIL_REQUEST,
+  SHARE_EMAIL_SUCCESS,
+  SHARE_EMAIL_FAILED,
   ADD_EMAIL_REQUEST,
   ADD_EMAIL_SUCCESS,
   ADD_EMAIL_FAILED,
@@ -21,15 +21,29 @@ export const sendEmail = ({ image, link, description, doc }) => async (
   formData.append("document", doc, doc.name);
   formData.append("link", link);
   formData.append("description", description);
+  dispatch({ type: SHARE_EMAIL_REQUEST });
   try {
     const token = localStorage.getItem("token");
-    const res = await axios.post(backendurl + "/api/sendlink/email", formData, {
-      headers: { "Content-Type": "multipart/form-data", "x-auth-token": token },
-    });
-
-    console.log(res);
+    const { data } = await axios.post(
+      backendurl + "/api/sendlink/email",
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          "x-auth-token": token,
+        },
+      }
+    );
+    if (data.error) {
+      dispatch({
+        type: SHARE_EMAIL_FAILED,
+        error: data.error,
+      });
+    } else {
+      dispatch({ type: SHARE_EMAIL_SUCCESS, message: data.message });
+    }
   } catch (error) {
-    console.log(error);
+    dispatch({ type: SHARE_EMAIL_FAILED, error: error.response.data.message });
   }
 };
 
@@ -40,8 +54,6 @@ export const loadEmails = () => async (dispatch) => {
     const { data } = await axios.get(backendurl + "/api/get/mail", {
       headers: { "x-auth-token": token },
     });
-
-    console.log(data);
 
     dispatch({ type: LOAD_EMAILS_SUCCESS, mails: data.mails });
   } catch (error) {

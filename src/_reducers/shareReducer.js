@@ -15,7 +15,7 @@ const shareReducer = (state = { user: {}, mails: [] }, action) => {
     case SHARE_EMAIL_REQUEST:
       return { ...state, shareLoading: true };
     case SHARE_EMAIL_SUCCESS:
-      return { ...state, shareLoading: false };
+      return { ...state, shareLoading: false, shareMessage: action.message };
     case SHARE_EMAIL_FAILED:
       return { ...state, shareLoading: false, shareError: action.error };
     case LOAD_EMAILS_REQUEST:
