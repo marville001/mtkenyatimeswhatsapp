@@ -37,13 +37,16 @@ export const sendEmail = ({ image, link, description, doc }) => async (
     if (data.error) {
       dispatch({
         type: SHARE_EMAIL_FAILED,
-        error: data.error,
+        error: "Could not send email, try again later",
       });
     } else {
       dispatch({ type: SHARE_EMAIL_SUCCESS, message: data.message });
     }
   } catch (error) {
-    dispatch({ type: SHARE_EMAIL_FAILED, error: error.response.data.message });
+    dispatch({
+      type: SHARE_EMAIL_FAILED,
+      error: "Could not send email, try again later",
+    });
   }
 };
 
